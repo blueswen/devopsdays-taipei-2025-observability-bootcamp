@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'app/springboot/**'
+      - '.github/workflows/build-springboot-app.yaml'
   workflow_dispatch:
 
 jobs:

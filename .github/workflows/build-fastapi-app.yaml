@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'app/fastapi/**'
+      - '.github/workflows/build-fastapi-app.yaml'
   workflow_dispatch:
 
 jobs:
