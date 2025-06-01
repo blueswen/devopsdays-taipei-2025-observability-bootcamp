@@ -1,0 +1,18 @@
+services:
+  k6:
+    image: grafana/k6:latest
+    container_name: k6
+    volumes:
+      - ./k6-script.js:/var/k6/script.js
+    environment:
+      - MODE=compose
+    command: run --vus 3 --duration 300s /var/k6/script.js
+  
+  k6-todo:
+    image: grafana/k6:latest
+    container_name: k6-todo
+    volumes:
+      - ./k6-script-todo.js:/var/k6/script.js
+    environment:
+      - MODE=compose
+    command: run --vus 3 --duration 300s /var/k6/script.js

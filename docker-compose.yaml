@@ -1,0 +1,227 @@
+x-logging: &default-logging
+  driver: loki
+  options:
+    loki-url: 'http://localhost:3100/api/prom/push'
+    loki-pipeline-stages: |
+      - multiline:
+          firstline: '^\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2}'
+          max_wait_time: 3s
+      - regex:
+          expression: '^(?P<time>\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2},\d{3}) (?P<message>(?s:.*))$$'
+
+x-app-dependencies: &app-dependencies
+  loki:
+    condition: service_started
+  postgres:
+    condition: service_healthy
+  redis:
+    condition: service_started
+
+services:
+  loki:
+    image: grafana/loki:3.5.0
+    container_name: loki
+    command: -config.file=/etc/loki/local-config.yaml
+    ports:
+      - "3100:3100"
+
+  basic:
+    # build: ./app/fastapi/
+    image: ghcr.io/blueswen/devopsdays-taipei-2025-observability-bootcamp/fastapi:latest
+    container_name: basic
+    ports:
+      - "7999:8000"
+    depends_on:
+      loki:
+        condition: service_started
+      postgres:
+        condition: service_healthy
+    logging: *default-logging
+    environment:
+      - OTEL_TRACES_EXPORTER=otlp
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://tempo:4317
+      - OTEL_METRICS_EXPORTER=none
+      - OTEL_SERVICE_NAME=basic
+    command: uv run opentelemetry-instrument python basic.py
+
+  app-a:
+    # build: ./app/fastapi/
+    image: ghcr.io/blueswen/devopsdays-taipei-2025-observability-bootcamp/fastapi:latest
+    container_name: app-a
+    ports:
+      - "8000:8000"
+    environment:
+      - TARGET_ONE_SVC=app-b:8000
+      - TARGET_TWO_SVC=app-c:8000
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_SERVER=postgres
+      - REDIS_SERVER=redis
+      - OTEL_TRACES_EXPORTER=otlp
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://tempo:4317
+      - OTEL_METRICS_EXPORTER=none
+      - OTEL_PYTHON_EXCLUDED_URLS=/metrics
+      - OTEL_SERVICE_NAME=app-a
+      - CODE_BASED_INSTRUMENTATION=true
+      - APP_NAME=app-a
+      - TIME_BOMB=true
+    logging: *default-logging
+    command: uv run main.py
+
+  app-b:
+    # build: ./app/fastapi/
+    image: ghcr.io/blueswen/devopsdays-taipei-2025-observability-bootcamp/fastapi:latest
+    container_name: app-b
+    ports:
+      - "8001:8000"
+    environment:
+      - TARGET_ONE_SVC=app-c:8000
+      - TARGET_TWO_SVC=app-a:8000
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_SERVER=postgres
+      - REDIS_SERVER=redis
+      - OTEL_TRACES_EXPORTER=otlp
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://tempo:4317
+      - OTEL_METRICS_EXPORTER=none
+      - OTEL_PYTHON_EXCLUDED_URLS=/metrics
+      - OTEL_SERVICE_NAME=app-b
+      - CODE_BASED_INSTRUMENTATION=true
+      - APP_NAME=app-b
+    logging: *default-logging
+    depends_on: *app-dependencies
+    command: uv run main.py
+
+  app-c:
+    # build: ./app/fastapi/
+    image: ghcr.io/blueswen/devopsdays-taipei-2025-observability-bootcamp/fastapi:latest
+    container_name: app-c
+    ports:
+      - "8002:8000"
+    environment:
+      - TARGET_ONE_SVC=app-a:8000
+      - TARGET_TWO_SVC=app-b:8000
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_SERVER=postgres
+      - REDIS_SERVER=redis
+      - OTEL_TRACES_EXPORTER=otlp
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://tempo:4317
+      - OTEL_METRICS_EXPORTER=none
+      - OTEL_PYTHON_EXCLUDED_URLS=/metrics
+      - OTEL_SERVICE_NAME=app-c
+      - CODE_BASED_INSTRUMENTATION=true
+      - APP_NAME=app-c
+    logging: *default-logging
+    depends_on: *app-dependencies
+    command: uv run main.py
+
+  app-d:
+    # build: ./app/springboot/
+    image: ghcr.io/blueswen/devopsdays-taipei-2025-observability-bootcamp/springboot:latest
+    container_name: app-d
+    environment:
+      - TARGET_ONE=app-a:8000
+      - TARGET_ONE=app-b:8000
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://tempo:4317 # send traces to Tempo
+      - OTEL_EXPORTER_OTLP_PROTOCOL=grpc # use gRPC for OTLP
+      - OTEL_SERVICE_NAME=app-d # service name for Span
+      - OTEL_METRICS_EXPORTER=none # disable metrics exporter
+      - OTEL_LOGS_EXPORTER=none # disable logs exporter
+      - MANAGEMENT_METRICS_TAGS_APPLICATION=app-d # override default value of management.metrics.tags.application in app/src/main/resources/application.properties
+    ports:
+      - "8003:8080"
+    logging: *default-logging
+    depends_on: *app-dependencies
+    command: uv run main.py
+
+  postgres:
+    image: postgres:16.4
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  
+  redis:
+    image: redis:7.4
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  webhook:
+    # build: ./app/fastapi/
+    image: ghcr.io/blueswen/devopsdays-taipei-2025-observability-bootcamp/fastapi:latest
+    container_name: webhook
+    ports:
+      - "8004:8000"
+    command: uv run webhook.py
+    depends_on:
+      - loki
+    logging: *default-logging
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.52.1
+    container_name: cadvisor
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  prometheus:
+    image: prom/prometheus:v3.3.1
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./etc/prometheus.yml:/workspace/prometheus.yml
+    command:
+      - --config.file=/workspace/prometheus.yml
+      - --enable-feature=exemplar-storage
+    depends_on:
+      - loki
+    logging: *default-logging
+
+  tempo:
+    image: grafana/tempo:2.7.2
+    container_name: tempo
+    command: [ "-config.file=/etc/tempo.yml", "--target=all", "--storage.trace.backend=local", "--storage.trace.local.path=/var/tempo", "--auth.enabled=false" ]
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+    volumes:
+      - ./etc/tempo.yml:/etc/tempo.yml
+    depends_on:
+      - loki
+    logging: *default-logging
+
+  grafana:
+    image: grafana/grafana:12.0.1
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./etc/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - ./etc/grafana/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml
+      - ./etc/grafana/dashboards:/etc/grafana/dashboards
+      - ./etc/grafana/alerting:/etc/grafana/provisioning/alerting
+      - ./etc/grafana/grafana.ini:/etc/grafana/grafana.ini
+    environment:
+      GF_FEATURE_TOGGLES_ENABLE: alertingCentralAlertHistory
+    depends_on:
+      - loki
+      - prometheus
+    logging: *default-logging

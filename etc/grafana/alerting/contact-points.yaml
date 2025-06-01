@@ -1,0 +1,10 @@
+apiVersion: 1
+contactPoints:
+    - orgId: 1
+      name: webhook
+      receivers:
+        - uid: een5ge1o3yb5sd
+          type: webhook
+          settings:
+            url: http://webhook:8000/webhook
+          disableResolveMessage: false
