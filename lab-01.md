@@ -56,7 +56,7 @@ Explore 查 Tempo
     docker compose -f docker-compose-k6.yaml up k6-todo
     ````
 
-2. 檢視 FastAPI Observability Dashboard，排查 App A `todos/` 時間偏高的原因
+2. 檢視 FastAPI Observability Dashboard，排查 App A `/todos/` 時間偏高的原因
 
 <details>
 
