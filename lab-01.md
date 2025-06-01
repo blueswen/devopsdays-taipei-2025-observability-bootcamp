@@ -67,7 +67,7 @@ Explore 查 Tempo
 2. View 放大 Panel，篩選出 `/todos/`，透過 Exemplar 連結至 Trace
    ![Metrics View](images/lab-01/03-02.png)
    ![Exemplar Link](images/lab-01/03-03.png)
-3. 透過 Trace ID 檢視對應 Log，發現 Log 有個 Time bomb
+3. 透過 Trace ID 檢視對應 Log，發現 Log 有 `Time bomb` 相關錯誤訊息
    ![Traces to Logs](images/lab-01/03-04.png)
 
 </details>

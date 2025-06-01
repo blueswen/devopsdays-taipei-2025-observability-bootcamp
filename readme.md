@@ -179,8 +179,7 @@ Alerting History Page 需要另外啟用 Grafana feature `alertingCentralAlertHi
       GF_FEATURE_TOGGLES_ENABLE: alertingCentralAlertHistory
    ```
 
-Loki 可能會需要額外進行設定，官方另外也建議額外建立專用於 Alerting 的 Loki Instance，詳細說明可以參考 [Configure alert state history
- - Configuring](https://grafana.com/docs/grafana/latest/alerting/set-up/configure-alert-state-history/#configuring-loki)。
+Loki 可能會需要額外進行設定，官方另外也建議額外建立專用於 Alerting 的 Loki Instance，詳細說明可以參考 [Configure alert state history - Configuring](https://grafana.com/docs/grafana/latest/alerting/set-up/configure-alert-state-history/#configuring-loki)。
 
 ## References
 
