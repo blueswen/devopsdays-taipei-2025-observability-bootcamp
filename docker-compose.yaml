@@ -17,6 +17,7 @@ x-app-dependencies: &app-dependencies
   redis:
     condition: service_started
 
+name: devopsdays-taipei-2025-observability-bootcamp
 services:
   loki:
     image: grafana/loki:3.5.0

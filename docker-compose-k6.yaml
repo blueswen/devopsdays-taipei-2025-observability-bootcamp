@@ -1,3 +1,4 @@
+name: devopsdays-taipei-2025-observability-bootcamp
 services:
   k6:
     image: grafana/k6:latest
