@@ -8,7 +8,7 @@
    3. Traces: OpenTelemetry 設定
       1. Basic Trace Demo
       2. App A Trace Demo
-2. Grafana
+2. Grafana http://localhost:3000 `admin/admin`
    1. Datasource & Explore：Prometheus、Loki、Tempo
    2. Dashboard：cAdvisor exporter、FastAPI Observability、Spring Boot Observability
    3. 交互應用
@@ -17,14 +17,14 @@
 
 ### Task 1
 
-1. 開啟 http://localhost:8000
-2. 在 Explore 中查詢 App A 的 Log
+1. 使用瀏覽器開啟 <http://localhost:8000>（App A）
+2. 在 Grafana Explore 中查詢 App A 的 Log
 
 <details>
 
 <summary>Answer</summary>
 
-Explore 查 Loki
+Grafana Explore 查 Loki
 
 ![Explore Loki](images/lab-01/01-app-a-log.png)
 
@@ -32,14 +32,14 @@ Explore 查 Loki
 
 ### Task 2
 
-1. 開啟 http://localhost:8000/chain
-2. 在 Explore 中查詢 App A 該筆 Request 的 Trace
+1. 使用瀏覽器開啟 <http://localhost:8000/chain>（App A）
+2. 在 Grafana Explore 中查詢 App A 該筆 Request 的 Trace
 
 <details>
 
 <summary>Answer</summary>
 
-Explore 查 Tempo
+Grafana Explore 查 Tempo
 
 ![Explore Tempo](images/lab-01/02-app-a-trace.png)
 
@@ -56,7 +56,7 @@ Explore 查 Tempo
     docker compose -f docker-compose-k6.yaml up k6-todo
     ````
 
-2. 檢視 FastAPI Observability Dashboard，排查 App A `/todos/` 時間偏高的原因
+2. 檢視 Grafana 中的 FastAPI Observability Dashboard，排查 App A `/todos/` 時間偏高的原因
 
 <details>
 
