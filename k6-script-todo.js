@@ -7,41 +7,41 @@ export function setup() {
   if (mode === "compose") {
     server = "app-a:8000";
   }
-  // a todo list for traveling Kaoshiung
+  // a todo list for learning Observability
   var todo_list = [
     {
-      "title": "Visit the Dragon and Tiger Pagodas",
-      "description": "Explore the iconic Dragon and Tiger Pagodas at Lotus Pond, and don't forget to enter through the dragon's mouth and exit from the tiger's mouth for good luck.",
+      "title": "Set up Prometheus",
+      "description": "Install Prometheus and configure it to scrape metrics from a basic application or exporter.",
       "completed": false
     },
     {
-      "title": "Enjoy the Night Market at Ruifeng",
-      "description": "Discover the popular Ruifeng Night Market, known for its variety of street food, carnival games, and local goods, offering a lively experience in the heart of Kaohsiung.",
+      "title": "Visualize metrics in Grafana",
+      "description": "Connect Prometheus to Grafana and build a simple dashboard to display CPU and memory usage.",
       "completed": false
     },
     {
-      "title": "Take a Ferry to Cijin Island",
-      "description": "Take a quick ferry ride to Cijin Island, a beautiful spot for beaches, seafood, and a hike up to the Cihou Lighthouse for stunning views of Kaohsiung harbor.",
+      "title": "Enable structured logging",
+      "description": "Configure the application to emit logs in JSON format and include fields like timestamp, level, and service name.",
       "completed": false
     },
     {
-      "title": "Explore the Pier-2 Art Center",
-      "description": "Visit the Pier-2 Art Center, a cultural hub with contemporary art exhibitions, creative shops, and outdoor art installations along the harbor.",
+      "title": "Set up Loki for log collection",
+      "description": "Deploy Loki and use Loki Docker Driver to collect and send logs from your application or container.",
       "completed": false
     },
     {
-      "title": "Visit Sizihwan Bay",
-      "description": "Relax at Sizihwan Bay, famous for its beautiful sunset views, sandy beaches, and calm waters, offering a perfect spot to unwind and enjoy the ocean scenery.",
+      "title": "Integrate OpenTelemetry tracing",
+      "description": "Instrument a basic HTTP API using OpenTelemetry SDK to generate traces and spans.",
       "completed": false
     },
     {
-      "title": "Visit Love River",
-      "description": "Stroll along Love River, a scenic waterway that runs through the city, lined with parks, cafes, and walking paths, offering a peaceful escape from the urban bustle.",
+      "title": "Export traces to Grafana Tempo",
+      "description": "Send tracing data from OpenTelemetry Collector to Tempo and view the traces in Grafana.",
       "completed": false
     },
     {
-      "title": "Visit Kaohsiung Music Center",
-      "description": "Explore the Kaohsiung Music Center, a modern architectural marvel with concert halls, music schools, and performance spaces, offering a vibrant cultural experience.",
+      "title": "Create an alert rule in Grafana",
+      "description": "Define an alert based on metric thresholds (e.g., memory > 80%) and configure a webhook notification.",
       "completed": false
     }
   ]
