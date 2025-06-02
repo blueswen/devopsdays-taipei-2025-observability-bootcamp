@@ -6,7 +6,7 @@
    1. [Provision Alert - Request Rate](http://localhost:3000/alerting/grafana/demykhzytyh34c/view)
       1. Config with duplicate
       2. Alert View
-      3. [History Page](http://localhost:3000/alerting/history?var-STATE_FILTER_FROM=all&var-STATE_FILTER_TO=all)
+   2. [History Page](http://localhost:3000/alerting/history?var-STATE_FILTER_FROM=all&var-STATE_FILTER_TO=all)
 2. Provisioning Contact Points
    1. [webhook](http://localhost:3000/alerting/notifications/receivers/d2ViaG9vaw/edit)
       1. Config

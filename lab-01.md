@@ -6,12 +6,12 @@
    1. Metrics: Prometheus 設定、Prometheus Web UI http://localhost:9090
    2. Logs: Docker Compose Logging 設定
    3. Traces: OpenTelemetry 設定
-      1. Basic Trace Demo
-      2. App A Trace Demo
+      1. Basic Trace Demo http://localhost:7999
+      2. App A Trace Demo http://localhost:8000
 2. Grafana http://localhost:3000 `admin/admin`
    1. Datasource & Explore：Prometheus、Loki、Tempo
-   2. Dashboard：cAdvisor exporter、FastAPI Observability、Spring Boot Observability
-   3. 交互應用
+   2. Dashboard：[Cadvisor exporter](http://localhost:3000/d/cadvisor-exporter/cadvisor-exporter)、[FastAPI Observability](http://localhost:3000/d/fastapi-observability/fastapi-observability)、[Spring Boot Observability](http://localhost:3000/d/dLsDQIUnzb/spring-boot-observability)
+   3. [FastAPI Observability](http://localhost:3000/d/fastapi-observability/fastapi-observability) 交互應用
 
 ## Tasks
 
