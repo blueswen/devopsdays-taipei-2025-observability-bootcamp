@@ -145,9 +145,9 @@ Slide：從零到一：搭建你的第一個 Observability 平台
 
 為了讓 Alerting 狀態可以更好被檢視，Grafana 能夠另外搭配 Loki 儲存 Alerting 相關 Log，達到以下功能：
 
-1. [Alert State History](https://grafana.com/docs/grafana/latest/alerting/set-up/configure-alert-state-history/)：Grafana 10 新功能，啟用後搭配 Loki 能以視覺化的方式查看狀態變化
+1. [Alert State History](https://grafana.com/docs/grafana/latest/alerting/set-up/configure-alert-state-history/)：Grafana 10 新功能，能以視覺化的方式查看 Alert Rule 中每個 Instance 的 State 變化紀錄
    ![Alert State History](images/alert-state-history.png)
-2. [Alerting History Page](https://grafana.com/docs/grafana/latest/alerting/monitor-status/view-alert-state-history/#view-from-the-history-page)：Grafana 11.2 新功能，啟用後可以查看所有 Alert 的 State 變化紀錄
+2. [Alerting History Page](https://grafana.com/docs/grafana/latest/alerting/monitor-status/view-alert-state-history/#view-from-the-history-page)：Grafana 11.2 新功能，可以查看所有 Alert 的 State 變化紀錄
    ![Alerting History Page](images/alerting-history-page.png)
 
 搭配 Loki 方式為設定 `grafana.ini` 設定檔：
