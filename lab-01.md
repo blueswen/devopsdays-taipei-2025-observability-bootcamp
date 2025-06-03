@@ -9,7 +9,7 @@
       1. Basic Trace Demo http://localhost:7999
       2. App A Trace Demo http://localhost:8000
 2. Grafana http://localhost:3000 `admin/admin`
-   1. Datasource & Explore：Prometheus、Loki、Tempo
+   1. [Datasource](http://localhost:3000/connections/datasources) & [Explore](http://localhost:3000/explore)：Prometheus、Loki、Tempo
    2. Dashboard：[Cadvisor exporter](http://localhost:3000/d/cadvisor-exporter/cadvisor-exporter)、[FastAPI Observability](http://localhost:3000/d/fastapi-observability/fastapi-observability)、[Spring Boot Observability](http://localhost:3000/d/dLsDQIUnzb/spring-boot-observability)
    3. [FastAPI Observability](http://localhost:3000/d/fastapi-observability/fastapi-observability) 交互應用
 
@@ -63,11 +63,17 @@ Grafana Explore 查 Tempo
 <summary>Answer</summary>
 
 1. Metrics 發現 `/todos/` 的時間偏高
+
    ![Metrics](images/lab-01/03-01.png)
+
 2. View 放大 Panel，篩選出 `/todos/`，透過 Exemplar 連結至 Trace
+
    ![Metrics View](images/lab-01/03-02.png)
+
    ![Exemplar Link](images/lab-01/03-03.png)
+
 3. 透過 Trace ID 檢視對應 Log，發現 Log 有 `Time bomb` 相關錯誤訊息
+
    ![Traces to Logs](images/lab-01/03-04.png)
 
 </details>
