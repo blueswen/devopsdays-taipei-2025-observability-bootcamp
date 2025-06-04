@@ -14,6 +14,7 @@ management:
 logging:
   pattern:
     level: "trace_id=%mdc{trace_id} span_id=%mdc{span_id} trace_flags=%mdc{trace_flags} %p"
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN} [%thread] [%logger{36}] - %msg%n"
   level:
     com.example.app: DEBUG
 
