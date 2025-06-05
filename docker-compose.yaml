@@ -15,7 +15,7 @@ x-app-dependencies: &app-dependencies
   postgres:
     condition: service_healthy
   redis:
-    condition: service_started
+    condition: service_healthy
 
 name: devopsdays-taipei-2025-observability-bootcamp
 services:
@@ -126,7 +126,7 @@ services:
     container_name: app-d
     environment:
       - TARGET_ONE=app-a:8000
-      - TARGET_ONE=app-b:8000
+      - TARGET_TWO=app-b:8000
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://tempo:4317 # send traces to Tempo
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc # use gRPC for OTLP
       - OTEL_SERVICE_NAME=app-d # service name for Span
@@ -137,7 +137,6 @@ services:
       - "8003:8080"
     logging: *default-logging
     depends_on: *app-dependencies
-    command: uv run main.py
 
   postgres:
     image: postgres:16.4
@@ -159,6 +158,11 @@ services:
     container_name: redis
     ports:
       - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
 
   webhook:
     # build: ./app/fastapi/
