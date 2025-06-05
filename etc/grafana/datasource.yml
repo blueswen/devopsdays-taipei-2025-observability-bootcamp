@@ -25,7 +25,7 @@ datasources:
     jsonData:
       exemplarTraceIdDestinations:
         - datasourceUid: tempo
-          name: TraceID
+          name: trace_id
       httpMethod: POST
     readOnly: false
     editable: true

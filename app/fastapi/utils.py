@@ -89,7 +89,7 @@ class PrometheusMiddleware(BaseHTTPMiddleware):
 
             REQUESTS_PROCESSING_TIME.labels(
                 method=method, path=path, app_name=self.app_name
-            ).observe(after_time - before_time, exemplar={"TraceID": trace_id})
+            ).observe(after_time - before_time, exemplar={"trace_id": trace_id})
         finally:
             RESPONSES.labels(
                 method=method,

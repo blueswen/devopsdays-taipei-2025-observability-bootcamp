@@ -123,7 +123,7 @@ Slide：從零到一：搭建你的第一個 Observability 平台
 
 ![Prometheus Exemplar](images/prometheus-exemplar.png)
 
-查詢 Metrics 時可以看到該 Exemplar 的詳細資訊，其中的 `TraceID` 就會作為 Trace Data Source 的 Trace ID 來查詢。
+查詢 Metrics 時可以看到該 Exemplar 的詳細資訊，其中的 `trace_id` 就會作為 Trace Data Source 的 Trace ID 來查詢。
 
 ### Loki
 
