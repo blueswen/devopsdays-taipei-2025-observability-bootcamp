@@ -2,7 +2,7 @@
 
 此 Project 為 DevOpsDays Taipei 2025 「[【Bootcamp】從零到一：搭建你的第一個 Observability 平台](https://devopsdays.tw/2025/workshop-page/3920)」 Workshop 所使用的範例程式碼。
 
-Slide：[從零到一：搭建你的第一個 Observability 平台](https://speakerdeck.com/blueswen/20250606-observability-bootcamp-101)
+Slide：[從零到一：搭建你的第一個 Observability 平台](https://speakerdeck.com/blueswen/cong-ling-dao-da-jian-ni-de-di-ge-observability-ping-tai)
 
 想了解更多可觀測性的內容，可以參考：
 
