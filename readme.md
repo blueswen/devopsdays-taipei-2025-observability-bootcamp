@@ -56,7 +56,7 @@ Slide：[從零到一：搭建你的第一個 Observability 平台](https://spea
 
 3. Send Request to applications
    1. With Swagger UI
-      1. basic: http://localhost:7779/docs
+      1. basic: http://localhost:7999/docs
       2. app-a: http://localhost:8000/docs
       3. app-b: http://localhost:8001/docs
       4. app-c: http://localhost:8002/docs
