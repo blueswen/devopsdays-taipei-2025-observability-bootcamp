@@ -37,7 +37,12 @@ Slide：[從零到一：搭建你的第一個 Observability 平台](https://spea
 8. Loki：接收 Loki Docker Driver 傳送的 Log
 9. Grafana：查詢 Tempo、Prometheus、Loki 的資料
 
-## Usage
+## Quick Start
+
+Prerequisites:
+
+- macOS or Windows with latest Docker Desktop
+- Linux or WSL with latest Docker Engine
 
 1. Install Loki Docker Driver
 
